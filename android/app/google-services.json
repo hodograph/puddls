@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "895603888851",
+    "project_id": "puddls",
+    "storage_bucket": "puddls.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:895603888851:android:6ab8b33d5bedcda5173a26",
+        "android_client_info": {
+          "package_name": "com.puddls.puddls"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBe7V3oFeDwZ4aYOlX9crkcTyuPTERgK7c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

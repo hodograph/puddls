@@ -1,4 +1,4 @@
-package com.example.puddls
+package com.puddls.puddls
 
 import io.flutter.embedding.android.FlutterActivity
 
