@@ -70,7 +70,7 @@ class _LoginPageState extends State<LoginPage>
                   controller: passwordController, 
                   decoration: const InputDecoration(hintText: 'Password'),
                   obscureText: true,
-                  onFieldSubmitted: (password) => signIn,
+                  onFieldSubmitted: (password) => signIn(),
                 ),
 
                 const SizedBox(height: 25),

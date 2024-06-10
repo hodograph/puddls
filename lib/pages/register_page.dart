@@ -86,7 +86,7 @@ class _RegisterPageState extends State<RegisterPage>
                   controller: passwordConfirmationController, 
                   decoration: const InputDecoration(hintText: 'Confirm Password'),
                   obscureText: true,
-                  onFieldSubmitted: (password) => signUp,
+                  onFieldSubmitted: (password) => signUp(),
                 ),
 
                 const SizedBox(height: 25),

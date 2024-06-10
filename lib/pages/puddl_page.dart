@@ -32,8 +32,8 @@ class _PuddlePage extends State<PuddlPage>
         ),
         body: const TabBarView(
           children: [
-            Text("You are not currently hosting any puddls"),
-            Text("You are not currently planning to ride in any puddls")
+            Center( child: Text("You are not currently hosting any puddls")),
+            Center( child: Text("You are not currently planning to ride in any puddls"))
           ],
         ),
         floatingActionButton: FloatingActionButton(

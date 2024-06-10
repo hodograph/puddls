@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:puddls/pages/account_page.dart';
+import 'package:puddls/pages/notifications_page.dart';
 import 'package:puddls/pages/puddl_page.dart';
 
 class HomePage extends StatefulWidget{
@@ -35,17 +36,7 @@ class _HomePageState extends State<HomePage>
         NavigationDestination(icon: Icon(Icons.account_circle), label: 'Me')
       ]),
       body: <Widget>[
-        const Card(
-          shadowColor: Colors.transparent,
-          margin: EdgeInsets.all(8.0),
-          child: SizedBox.expand(
-            child: Center(
-              child: Text(
-                'Notifications',
-              ),
-            ),
-          ),
-        ),
+        const NotificationsPage(),
         const PuddlPage(),
         const AccountPage()
       ][currentPageIndex]
