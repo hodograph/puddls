@@ -60,15 +60,18 @@ class _LoginPageState extends State<LoginPage>
                 TextField(
                   controller: emailController, 
                   decoration: const InputDecoration(hintText: 'Email'),
-                  obscureText: false),
+                  obscureText: false
+                ),
 
                 const SizedBox(height: 10),
 
                 // Password field
-                TextField(
+                TextFormField(
                   controller: passwordController, 
                   decoration: const InputDecoration(hintText: 'Password'),
-                  obscureText: true),
+                  obscureText: true,
+                  onFieldSubmitted: (password) => signIn,
+                ),
 
                 const SizedBox(height: 25),
 

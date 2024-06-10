@@ -67,7 +67,8 @@ class _RegisterPageState extends State<RegisterPage>
                 TextField(
                   controller: emailController, 
                   decoration: const InputDecoration(hintText: 'Email'),
-                  obscureText: false),
+                  obscureText: false
+                ),
 
                 const SizedBox(height: 10),
 
@@ -75,15 +76,18 @@ class _RegisterPageState extends State<RegisterPage>
                 TextField(
                   controller: passwordController, 
                   decoration: const InputDecoration(hintText: 'Password'),
-                  obscureText: true),
+                  obscureText: true
+                ),
 
                 const SizedBox(height: 10),
 
-                // Password field
-                TextField(
+                // Password confirmation field
+                TextFormField(
                   controller: passwordConfirmationController, 
                   decoration: const InputDecoration(hintText: 'Confirm Password'),
-                  obscureText: true),
+                  obscureText: true,
+                  onFieldSubmitted: (password) => signUp,
+                ),
 
                 const SizedBox(height: 25),
                 

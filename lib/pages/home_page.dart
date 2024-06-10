@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:puddls/pages/account_page.dart';
+import 'package:puddls/pages/puddl_page.dart';
 
 class HomePage extends StatefulWidget{
   const HomePage({super.key});
@@ -11,7 +12,7 @@ class HomePage extends StatefulWidget{
 class _HomePageState extends State<HomePage>
 {
 
-  int currentPageIndex = 0;
+  int currentPageIndex = 1;
 
   @override
   Widget build(BuildContext context) {
@@ -29,46 +30,11 @@ class _HomePageState extends State<HomePage>
       },
       selectedIndex: currentPageIndex,
       destinations: const <Widget>[
-        NavigationDestination(icon: Icon(Icons.list), label: 'Feed'),
-        NavigationDestination(icon: Icon(Icons.car_rental), label: 'Puddl'),
-        NavigationDestination(icon: Icon(Icons.message), label: 'Chats'),
         NavigationDestination(icon: Icon(Icons.notifications), label: 'Notifications'),
+        NavigationDestination(icon: Icon(Icons.car_rental), label: 'Puddl'),
         NavigationDestination(icon: Icon(Icons.account_circle), label: 'Me')
       ]),
       body: <Widget>[
-        const Card(
-          shadowColor: Colors.transparent,
-          margin: EdgeInsets.all(8.0),
-          child: SizedBox.expand(
-            child: Center(
-              child: Text(
-                'Feed',
-              ),
-            ),
-          ),
-        ),
-        const Card(
-          shadowColor: Colors.transparent,
-          margin: EdgeInsets.all(8.0),
-          child: SizedBox.expand(
-            child: Center(
-              child: Text(
-                'Puddl',
-              ),
-            ),
-          ),
-        ),
-        const Card(
-          shadowColor: Colors.transparent,
-          margin: EdgeInsets.all(8.0),
-          child: SizedBox.expand(
-            child: Center(
-              child: Text(
-                'Chats',
-              ),
-            ),
-          ),
-        ),
         const Card(
           shadowColor: Colors.transparent,
           margin: EdgeInsets.all(8.0),
@@ -80,6 +46,7 @@ class _HomePageState extends State<HomePage>
             ),
           ),
         ),
+        const PuddlPage(),
         const AccountPage()
       ][currentPageIndex]
     );
