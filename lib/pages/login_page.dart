@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:puddls/services/auth/auth_service.dart';
 import 'package:provider/provider.dart';
 
@@ -28,7 +27,10 @@ class _LoginPageState extends State<LoginPage>
     }
     catch(e)
     {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString())));
+      if(mounted)
+      {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString())));
+      }
     }
   }
   
@@ -43,7 +45,7 @@ class _LoginPageState extends State<LoginPage>
             child: Column(
               children: [
                 // Login Icon
-                Icon(Icons.login,
+                const Icon(Icons.login,
                   size: 80),
 
                 const SizedBox(height: 25),
@@ -57,7 +59,7 @@ class _LoginPageState extends State<LoginPage>
                 // Email field
                 TextField(
                   controller: emailController, 
-                  decoration: InputDecoration(hintText: 'Email'),
+                  decoration: const InputDecoration(hintText: 'Email'),
                   obscureText: false),
 
                 const SizedBox(height: 10),
@@ -65,7 +67,7 @@ class _LoginPageState extends State<LoginPage>
                 // Password field
                 TextField(
                   controller: passwordController, 
-                  decoration: InputDecoration(hintText: 'Password'),
+                  decoration: const InputDecoration(hintText: 'Password'),
                   obscureText: true),
 
                 const SizedBox(height: 25),
@@ -73,7 +75,7 @@ class _LoginPageState extends State<LoginPage>
                 // Sign in button
                 FilledButton(
                   onPressed: signIn,
-                  child: Text('Sign In')
+                  child: const Text('Sign In')
                 ),
                 
                 const SizedBox(height: 25),
@@ -85,7 +87,7 @@ class _LoginPageState extends State<LoginPage>
                     const SizedBox(width: 4),
                     TextButton(
                       onPressed: widget.onTap, 
-                      child: Text("Create Account"))
+                      child: const Text("Create Account"))
                   ],
                 )
 

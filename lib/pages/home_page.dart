@@ -36,9 +36,9 @@ class _HomePageState extends State<HomePage>
         NavigationDestination(icon: Icon(Icons.account_circle), label: 'Me')
       ]),
       body: <Widget>[
-        Card(
+        const Card(
           shadowColor: Colors.transparent,
-          margin: const EdgeInsets.all(8.0),
+          margin: EdgeInsets.all(8.0),
           child: SizedBox.expand(
             child: Center(
               child: Text(
@@ -47,9 +47,9 @@ class _HomePageState extends State<HomePage>
             ),
           ),
         ),
-        Card(
+        const Card(
           shadowColor: Colors.transparent,
-          margin: const EdgeInsets.all(8.0),
+          margin: EdgeInsets.all(8.0),
           child: SizedBox.expand(
             child: Center(
               child: Text(
@@ -58,9 +58,9 @@ class _HomePageState extends State<HomePage>
             ),
           ),
         ),
-        Card(
+        const Card(
           shadowColor: Colors.transparent,
-          margin: const EdgeInsets.all(8.0),
+          margin: EdgeInsets.all(8.0),
           child: SizedBox.expand(
             child: Center(
               child: Text(
@@ -69,9 +69,9 @@ class _HomePageState extends State<HomePage>
             ),
           ),
         ),
-        Card(
+        const Card(
           shadowColor: Colors.transparent,
-          margin: const EdgeInsets.all(8.0),
+          margin: EdgeInsets.all(8.0),
           child: SizedBox.expand(
             child: Center(
               child: Text(
@@ -80,7 +80,7 @@ class _HomePageState extends State<HomePage>
             ),
           ),
         ),
-        AccountPage()
+        const AccountPage()
       ][currentPageIndex]
     );
   }

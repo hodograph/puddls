@@ -25,20 +25,20 @@ class _AccountPage extends State<AccountPage>
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 25.0),
             child: Column(
-        children: [
+              children: [
 
-          SizedBox(height: 25,),
-          Icon(
-            Icons.account_circle,
-            size: 80,
-          ),
+                const SizedBox(height: 25,),
+                const Icon(
+                  Icons.account_circle,
+                  size: 80,
+                ),
 
-          SizedBox(height: 25,),
-          FilledButton(
-            onPressed: onPressed, 
-            child: Text("Log Out")
-          )
-        ],
+                const SizedBox(height: 25,),
+                FilledButton(
+                  onPressed: onPressed, 
+                  child: const Text("Log Out")
+                )
+              ],
             )
           )
         )

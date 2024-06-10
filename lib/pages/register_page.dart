@@ -33,7 +33,10 @@ class _RegisterPageState extends State<RegisterPage>
       }
       catch(e) 
       {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString())));
+        if(mounted)
+        {
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString())));
+        }
       }
     }
   }
@@ -49,7 +52,7 @@ class _RegisterPageState extends State<RegisterPage>
             child: Column(
               children: [
                 // Login Icon
-                Icon(Icons.login,
+                const Icon(Icons.login,
                   size: 80),
 
                 const SizedBox(height: 25),
@@ -63,7 +66,7 @@ class _RegisterPageState extends State<RegisterPage>
                 // Email field
                 TextField(
                   controller: emailController, 
-                  decoration: InputDecoration(hintText: 'Email'),
+                  decoration: const InputDecoration(hintText: 'Email'),
                   obscureText: false),
 
                 const SizedBox(height: 10),
@@ -71,7 +74,7 @@ class _RegisterPageState extends State<RegisterPage>
                 // Password field
                 TextField(
                   controller: passwordController, 
-                  decoration: InputDecoration(hintText: 'Password'),
+                  decoration: const InputDecoration(hintText: 'Password'),
                   obscureText: true),
 
                 const SizedBox(height: 10),
@@ -79,7 +82,7 @@ class _RegisterPageState extends State<RegisterPage>
                 // Password field
                 TextField(
                   controller: passwordConfirmationController, 
-                  decoration: InputDecoration(hintText: 'Confirm Password'),
+                  decoration: const InputDecoration(hintText: 'Confirm Password'),
                   obscureText: true),
 
                 const SizedBox(height: 25),
@@ -87,7 +90,7 @@ class _RegisterPageState extends State<RegisterPage>
                 // Sign up button
                 FilledButton(
                   onPressed: signUp,
-                  child: Text('Sign Up')
+                  child: const Text('Sign Up')
                 ),
                 
                 const SizedBox(height: 25),
@@ -99,7 +102,7 @@ class _RegisterPageState extends State<RegisterPage>
                     const SizedBox(width: 4),
                     TextButton(
                       onPressed: widget.onTap, 
-                      child: Text("Login now")
+                      child: const Text("Login now")
                     )
                   ],
                 )

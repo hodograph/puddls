@@ -27,7 +27,7 @@ if (flutterVersionName == null) {
 }
 
 android {
-    namespace = "com.example.puddls"
+    namespace = "com.puddls.puddls"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
 
