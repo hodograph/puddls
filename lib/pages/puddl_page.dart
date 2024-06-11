@@ -17,6 +17,7 @@ class _PuddlePage extends State<PuddlPage>
       length: 2,
       child: Scaffold(
         appBar: AppBar(
+          toolbarHeight: 0,
           bottom: const TabBar(
             tabs: [
               Tab(
