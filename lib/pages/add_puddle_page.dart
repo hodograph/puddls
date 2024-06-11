@@ -15,6 +15,7 @@ class _AddPuddlePage extends State<AddPuddlePage>
     return Scaffold(
       appBar: AppBar(
         title: const Text("Create Puddl"),
+        centerTitle: true,
       ),
       body: const SafeArea(
         child: Center(
