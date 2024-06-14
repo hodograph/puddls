@@ -28,8 +28,11 @@ class UserFirestoreService {
     return user;
   }
 
-  Stream<DocumentSnapshot> listenToUser(String id)
+  Stream<puddl_user.User> listenToUser(String? id)
   {
-    return users.doc(id).snapshots();
+    id ??= _firebaseAuth.currentUser!.uid;
+    return users.doc(id).snapshots().map(
+      (snapshot) => snapshot.data()! as puddl_user.User
+    );
   }
 }
