@@ -15,6 +15,7 @@ class _RegisterPageState extends State<RegisterPage>
 
   // text controllers
   final emailController = TextEditingController();
+  final nameController = TextEditingController();
   final passwordController = TextEditingController();
   final passwordConfirmationController = TextEditingController();
 
@@ -29,7 +30,7 @@ class _RegisterPageState extends State<RegisterPage>
       final authService = Provider.of<AuthService>(context, listen: false);
       try
       {
-        await authService.signUpWithEmailAndPassword(emailController.text, passwordController.text);
+        await authService.signUpWithEmailAndPassword(emailController.text, passwordController.text, nameController.text);
       }
       catch(e) 
       {
@@ -67,6 +68,15 @@ class _RegisterPageState extends State<RegisterPage>
                 TextField(
                   controller: emailController, 
                   decoration: const InputDecoration(hintText: 'Email'),
+                  obscureText: false
+                ),
+
+                const SizedBox(height: 10),
+
+                // Name field
+                TextField(
+                  controller: nameController, 
+                  decoration: const InputDecoration(hintText: 'Full Name'),
                   obscureText: false
                 ),
 
