@@ -1,8 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_google_places_sdk/flutter_google_places_sdk.dart';
 import 'package:provider/provider.dart';
 import 'package:puddls/components/date_time_selector.dart';
 import 'package:puddls/components/place_lookup.dart';
+import 'package:puddls/models/ride.dart';
 import 'package:puddls/services/maps/location_wrapper.dart';
 import 'package:puddls/services/maps/places_wrapper.dart';
 
@@ -16,9 +18,9 @@ class RidePuddlForm extends StatefulWidget
 
 class _RidePuddlForm extends State<RidePuddlForm>
 {
-  Place? start;
+  Place? origin;
   
-  Place? end;
+  Place? destination;
 
   DateTime beginRange = DateTime.now();
   DateTime endRange = DateTime.now().add( const Duration(minutes: 15));
@@ -27,6 +29,58 @@ class _RidePuddlForm extends State<RidePuddlForm>
   DateTime maxSelectableRange = DateTime.now().add( const Duration(days: 365));
 
   bool allDay = false;
+
+
+  void submitRide(LocationWrapper location)
+  {
+    if(beginRange.isBefore(endRange))
+    {
+      if(destination != null)
+      {
+        if(destination != origin)
+        {
+          // Default origin lat/lng to current location.
+          double originLat = location.currentLocation!.latitude!;
+          double originLng = location.currentLocation!.longitude!;
+
+          // If origin is not null that means there is a different start location than the current user location.
+          if(origin != null)
+          {
+            originLat = origin!.latLng!.lat;
+            originLng = origin!.latLng!.lng;
+          }
+
+          Ride ride = Ride
+          (
+            destinationLat: destination!.latLng!.lat,
+            destinationLng: destination!.latLng!.lng,
+            originLat: originLat,
+            originLng: originLng,
+            rider: FirebaseAuth.instance.currentUser!.uid,
+            startPickupRange: beginRange,
+            endPickupRange: allDay ? endRange.add(const Duration(hours: 24)) : endRange
+          );
+
+          // TODO: submit ride.
+        }
+        else 
+        {
+          // Alert destination and origin are the same place.
+          ScaffoldMessenger.of(context).showSnackBar( const SnackBar(content: Text("Warning: Pickup and Dropoff location are the same place.")));
+        }
+      }
+      else
+      {
+        // Alert destination is current location.
+        ScaffoldMessenger.of(context).showSnackBar( const SnackBar(content: Text("Warning: Dropoff location is your current location.")));
+      }
+    }
+    else
+    {
+      // Alert range is invalid.
+      ScaffoldMessenger.of(context).showSnackBar( const SnackBar(content: Text("Warning: Pickup range end time is before the start.")));
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -53,24 +107,28 @@ class _RidePuddlForm extends State<RidePuddlForm>
                   PlaceLookup(
                     onSelected: (option) async
                     {
-                      start = option;
+                      origin = option;
                     },
                     label: "Pickup",
                   ),
-                  const SizedBox(height: 25),
+
+                  const SizedBox(height: 15),
                   const Divider(),
+                  const SizedBox(height: 15),
 
                   // Destination
                   PlaceLookup(
                     onSelected: (option) async
                     {
-                      end = option;
+                      destination = option;
                     },
                     label: "Dropoff",
                   ),
-                  const SizedBox(height: 25),
 
+                  const SizedBox(height: 15),
                   const Divider(),
+                  const SizedBox(height: 15),
+
                   Row
                   (
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -95,19 +153,24 @@ class _RidePuddlForm extends State<RidePuddlForm>
                   DateTimeSelector
                   (
                     allDay: allDay,
-                    onChange: (value) => beginRange = value,
+                    onChange: (value) => setState(() => beginRange = value),
                     defaultTime: beginRange,
                   ),
                   DateTimeSelector
                   (
                     allDay: allDay,
-                    onChange: (value) => endRange = value,
+                    onChange: (value) => setState(() => endRange = value),
                     defaultTime: endRange,
                   ),
                 ],
               )
             )
-          )
+          ),
+          floatingActionButton: FilledButton
+          (
+            child: const Icon(Icons.upload_rounded, size: 50,),
+            onPressed: () => submitRide(context.read<LocationWrapper>()),
+          ),
         )
       )
     );

@@ -12,8 +12,7 @@ class PlaceLookup extends StatefulWidget
 {
   final ValueChanged<Place?> onSelected;
   final String label;
-  final bool showMap;
-  const PlaceLookup({super.key, required this.onSelected, required this.label, this.showMap = true});
+  const PlaceLookup({super.key, required this.onSelected, required this.label});
 
   @override
   State<PlaceLookup> createState() => _PlaceLookup(); 
@@ -24,26 +23,26 @@ class _PlaceLookup extends State<PlaceLookup>
   Place? position;
   
   final Completer<maps.GoogleMapController> _controller = Completer();
+  
+  bool isOpen = false;
 
   Future<void> updateValueChanged(LocationData currentLocation) async
   {
-    if(widget.showMap){
-      maps.GoogleMapController googleMapController = await _controller.future;
-      googleMapController.animateCamera
+    maps.GoogleMapController googleMapController = await _controller.future;
+    googleMapController.animateCamera
+    (
+      maps.CameraUpdate.newCameraPosition
       (
-        maps.CameraUpdate.newCameraPosition
+        maps.CameraPosition
         (
-          maps.CameraPosition
+          target: maps.LatLng
           (
-            target: maps.LatLng
-            (
-              position?.latLng?.lat ?? currentLocation.latitude!,
-              position?.latLng?.lng ?? currentLocation.longitude!),
-            zoom: 13
-          )
+            position?.latLng?.lat ?? currentLocation.latitude!,
+            position?.latLng?.lng ?? currentLocation.longitude!),
+          zoom: 13
         )
-      );
-    }
+      )
+    );
 
     setState(() {});
     widget.onSelected(position);
@@ -53,69 +52,67 @@ class _PlaceLookup extends State<PlaceLookup>
   Widget build(BuildContext context) {
     final PlacesWrapper places = Provider.of<PlacesWrapper>(context, listen: false);
     final LocationWrapper location = context.watch<LocationWrapper>();
-
-    return Column(
-      children: 
-      [
-        Autocomplete<AutocompletePrediction>(
-          optionsBuilder: (TextEditingValue textEditingValue) async
+    return ExpansionPanelList
+    (
+      expansionCallback: (panelIndex, expanded) => setState((){ isOpen = expanded; }),
+      children: [
+        ExpansionPanel
+        (
+          headerBuilder: (context, isOpen)
           {
-            Iterable<AutocompletePrediction> options = [];
-            if(textEditingValue.text != "")
-            {
-              final response = await places.places.findAutocompletePredictions(textEditingValue.text);
-              options = response.predictions;
-            }
+            return Autocomplete<AutocompletePrediction>
+            (
+              optionsBuilder: (TextEditingValue textEditingValue) async
+              {
+                Iterable<AutocompletePrediction> options = [];
+                if(textEditingValue.text != "")
+                {
+                  final response = await places.places.findAutocompletePredictions(textEditingValue.text);
+                  options = response.predictions;
+                }
 
-            return options;
-          },
-          displayStringForOption: (option) 
-          {
-            return option.fullText;
-          },
-          onSelected: (option) async
-          {
-            var place = await places.places.fetchPlace(option.placeId, fields: [PlaceField.Location]);
-            position = place.place;
+                return options;
+              },
+              displayStringForOption: (option) 
+              {
+                return option.fullText;
+              },
+              onSelected: (option) async
+              {
+                var place = await places.places.fetchPlace(option.placeId, fields: [PlaceField.Location]);
+                position = place.place;
 
-            updateValueChanged(location.currentLocation!);
-          },
-          fieldViewBuilder:(context, textEditingController, focusNode, onFieldSubmitted) 
-          {
-            return TextFormField(
-              controller: textEditingController,
-              focusNode: focusNode,
-              onFieldSubmitted: (str) => onFieldSubmitted(),
-              decoration: InputDecoration(
-                border: const OutlineInputBorder(),
-                contentPadding: const EdgeInsets.symmetric(horizontal: 12),
-                labelText: widget.label,
-                hintText: "Current Location",
-                floatingLabelBehavior: FloatingLabelBehavior.always,
-                suffixIcon: IconButton
-                (
-                  onPressed: () 
-                  {
-                    textEditingController.clear();
-                    position = null;
-                    updateValueChanged(location.currentLocation!);
-                  },
-                  icon: const Icon(Icons.clear),
+                updateValueChanged(location.currentLocation!);
+              },
+              fieldViewBuilder:(context, textEditingController, focusNode, onFieldSubmitted) 
+              {
+                return TextFormField(
+                  controller: textEditingController,
+                  focusNode: focusNode,
+                  onFieldSubmitted: (str) => onFieldSubmitted(),
+                  decoration: InputDecoration(
+                    border: const OutlineInputBorder(),
+                    contentPadding: const EdgeInsets.symmetric(horizontal: 12),
+                    labelText: widget.label,
+                    hintText: "Current Location",
+                    floatingLabelBehavior: FloatingLabelBehavior.always,
+                    suffixIcon: IconButton
+                    (
+                      onPressed: () 
+                      {
+                        textEditingController.clear();
+                        position = null;
+                        updateValueChanged(location.currentLocation!);
+                      },
+                      icon: const Icon(Icons.clear),
 
-                )
-              ),
+                    )
+                  ),
+                );
+              },
             );
-          },
-        ),
-        Visibility
-        (
-          visible: widget.showMap,
-          child: const SizedBox(height: 5,),
-        ),
-        Visibility
-        (
-          visible: widget.showMap,
-          child: SizedBox
+          }, 
+          body: SizedBox
           (
             height: 200,
             child: location.currentLocation == null ?
@@ -150,7 +147,8 @@ class _PlaceLookup extends State<PlaceLookup>
                   ),
               ),
           ),
-        )
+          isExpanded: isOpen
+        ),
       ]
     );
   }

@@ -62,13 +62,20 @@ class _DateTimeSelector extends State<DateTimeSelector>
         (
           onPressed: () async
           {
-            DateTime? selectedStartTime = await showDatePicker(context: context, firstDate: minSelectableRange, lastDate: maxSelectableRange);
+            DateTime? selectedStartTime = await showDatePicker
+            (
+              context: context, 
+              firstDate: minSelectableRange, 
+              lastDate: maxSelectableRange, 
+              initialDate: selectedDate
+            );
             if(selectedStartTime != null)
             {
               setState(() 
               {
                 selectedDate = selectedStartTime;
               });
+              notifyValueChanged();
             }
           }, 
           child: Text(DateFormat("EEE, MMM d, yyyy").format(selectedDate))
@@ -87,6 +94,7 @@ class _DateTimeSelector extends State<DateTimeSelector>
                 {
                   selectedTime = selectedStartTime;
                 });
+                notifyValueChanged();
               }
             }, 
             child: Text(selectedTime.format(context))
