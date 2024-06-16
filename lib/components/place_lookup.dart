@@ -81,7 +81,14 @@ class _PlaceLookup extends State<PlaceLookup>
                 border: const OutlineInputBorder(),
                 contentPadding: const EdgeInsets.symmetric(horizontal: 12),
                 labelText: widget.label,
+                hintText: "Current Location",
                 floatingLabelBehavior: FloatingLabelBehavior.always,
+                suffixIcon: IconButton
+                (
+                  onPressed: () => textEditingController.clear(),
+                  icon: const Icon(Icons.clear),
+
+                )
               ),
             );
           },

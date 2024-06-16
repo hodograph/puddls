@@ -1,12 +1,10 @@
-import 'package:calendar_date_picker2/calendar_date_picker2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_google_places_sdk/flutter_google_places_sdk.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:puddls/components/date_time_selector.dart';
 import 'package:puddls/components/place_lookup.dart';
 import 'package:puddls/services/maps/location_wrapper.dart';
 import 'package:puddls/services/maps/places_wrapper.dart';
-import 'package:time_range_picker/time_range_picker.dart';
 
 class RidePuddlForm extends StatefulWidget
 {
@@ -24,7 +22,11 @@ class _RidePuddlForm extends State<RidePuddlForm>
 
   DateTime beginRange = DateTime.now();
   DateTime endRange = DateTime.now().add( const Duration(minutes: 15));
+
+  DateTime minSelectableRange = DateTime.now();
   DateTime maxSelectableRange = DateTime.now().add( const Duration(days: 365));
+
+  bool allDay = false;
 
   @override
   Widget build(BuildContext context) {
@@ -43,6 +45,7 @@ class _RidePuddlForm extends State<RidePuddlForm>
             child:  Padding(
               padding: const EdgeInsets.symmetric(horizontal: 25.0),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const SizedBox(height: 15),
 
@@ -55,6 +58,7 @@ class _RidePuddlForm extends State<RidePuddlForm>
                     label: "Pickup",
                   ),
                   const SizedBox(height: 25),
+                  const Divider(),
 
                   // Destination
                   PlaceLookup(
@@ -66,49 +70,40 @@ class _RidePuddlForm extends State<RidePuddlForm>
                   ),
                   const SizedBox(height: 25),
 
-                  // Pickup time
-                  // Row
-                  // (
-                  //   children: 
-                  //   [
-                  //     Text(DateFormat("MMMM dd").format(beginRange)),
-                  //     const Icon(Icons.arrow_forward_rounded),
-                  //     Text(DateFormat("MMMM dd").format(endRange)),
-                  //   ],
-                  // ),
-                  // // CalendarDatePicker2WithActionButtons
-                  // // (
-                  // //   value: const[],
-                  // //   config: CalendarDatePicker2WithActionButtonsConfig(
-                  // //     calendarType: CalendarDatePicker2Type.range
-                  // //   )
-                  // // ),
-                  // ElevatedButton
-                  // (
-                  //   onPressed: () async{
-                  //     TimeRange? result = await showTimeRangePicker
-                  //     (
-                  //       context: context,
-                  //       use24HourFormat: false,
-                  //       strokeColor: Theme.of(context).indicatorColor,
-                  //       handlerColor: Theme.of(context).indicatorColor,
-                  //       labels: [
-                  //         "12 am",
-                  //         "3 am",
-                  //         "6 am",
-                  //         "9 am",
-                  //         "12 pm",
-                  //         "3 pm",
-                  //         "6 pm",
-                  //         "9 pm"
-                  //       ].asMap().entries.map((e) {
-                  //         return ClockLabel.fromIndex(
-                  //             idx: e.key, length: 8, text: e.value);
-                  //       }).toList()
-                  //     );
-                  //   },
-                  //   child: const Text("Set Time")
-                  // )
+                  const Divider(),
+                  Row
+                  (
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: 
+                    [
+                      const Text("Pickup Range", style: TextStyle(fontSize: 18),),
+                      Row(
+                        children: [
+                          const Text("All-day", style: TextStyle(fontSize: 18),),
+                          Switch
+                          (
+                            value: allDay, 
+                            onChanged: (value) => setState(() 
+                            {
+                              allDay = value;
+                            })
+                          )
+                        ],
+                      )
+                    ],
+                  ),
+                  DateTimeSelector
+                  (
+                    allDay: allDay,
+                    onChange: (value) => beginRange = value,
+                    defaultTime: beginRange,
+                  ),
+                  DateTimeSelector
+                  (
+                    allDay: allDay,
+                    onChange: (value) => endRange = value,
+                    defaultTime: endRange,
+                  ),
                 ],
               )
             )
