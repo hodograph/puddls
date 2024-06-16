@@ -3,13 +3,14 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_google_places_sdk/flutter_google_places_sdk.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart' as maps;
+import 'package:location/location.dart';
 import 'package:provider/provider.dart';
 import 'package:puddls/services/maps/location_wrapper.dart';
 import 'package:puddls/services/maps/places_wrapper.dart';
 
 class PlaceLookup extends StatefulWidget
 {
-  final AutocompleteOnSelected<Place>? onSelected;
+  final ValueChanged<Place?> onSelected;
   final String label;
   final bool showMap;
   const PlaceLookup({super.key, required this.onSelected, required this.label, this.showMap = true});
@@ -23,6 +24,30 @@ class _PlaceLookup extends State<PlaceLookup>
   Place? position;
   
   final Completer<maps.GoogleMapController> _controller = Completer();
+
+  Future<void> updateValueChanged(LocationData currentLocation) async
+  {
+    if(widget.showMap){
+      maps.GoogleMapController googleMapController = await _controller.future;
+      googleMapController.animateCamera
+      (
+        maps.CameraUpdate.newCameraPosition
+        (
+          maps.CameraPosition
+          (
+            target: maps.LatLng
+            (
+              position?.latLng?.lat ?? currentLocation.latitude!,
+              position?.latLng?.lng ?? currentLocation.longitude!),
+            zoom: 13
+          )
+        )
+      );
+    }
+
+    setState(() {});
+    widget.onSelected(position);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,25 +76,9 @@ class _PlaceLookup extends State<PlaceLookup>
           onSelected: (option) async
           {
             var place = await places.places.fetchPlace(option.placeId, fields: [PlaceField.Location]);
-            position = place.place!;
+            position = place.place;
 
-            if(widget.showMap){
-              maps.GoogleMapController googleMapController = await _controller.future;
-              googleMapController.animateCamera
-              (
-                maps.CameraUpdate.newCameraPosition
-                (
-                  maps.CameraPosition
-                  (
-                    target: maps.LatLng(position!.latLng!.lat, position!.latLng!.lng),
-                    zoom: 13
-                  )
-                )
-              );
-            }
-
-            setState(() {});
-            widget.onSelected!(position!);
+            updateValueChanged(location.currentLocation!);
           },
           fieldViewBuilder:(context, textEditingController, focusNode, onFieldSubmitted) 
           {
@@ -85,7 +94,12 @@ class _PlaceLookup extends State<PlaceLookup>
                 floatingLabelBehavior: FloatingLabelBehavior.always,
                 suffixIcon: IconButton
                 (
-                  onPressed: () => textEditingController.clear(),
+                  onPressed: () 
+                  {
+                    textEditingController.clear();
+                    position = null;
+                    updateValueChanged(location.currentLocation!);
+                  },
                   icon: const Icon(Icons.clear),
 
                 )
