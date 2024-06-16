@@ -23,7 +23,7 @@ class _HomePageState extends State<HomePage>
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        StreamProvider.value(value: _userFirestoreService.listenToUser(null), initialData: null,)
+        StreamProvider.value(value: _userFirestoreService.listenToUser(null), initialData: null,),
       ],
       child: Scaffold(
       bottomNavigationBar: NavigationBar(onDestinationSelected: (int index) {

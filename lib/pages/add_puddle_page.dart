@@ -10,6 +10,9 @@ class AddPuddlePage extends StatefulWidget
 
 class _AddPuddlePage extends State<AddPuddlePage>
 {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,12 +20,25 @@ class _AddPuddlePage extends State<AddPuddlePage>
         title: const Text("Create Puddl"),
         centerTitle: true,
       ),
-      body: const SafeArea(
+      body: SafeArea(
         child: Center(
-          child: Column(
-            children: [
-              Text("Todo: Make puddl form")
-            ],
+          child: Form(
+            key: _formKey,
+            child: Column(
+              children: [
+                DropdownButtonFormField
+                (
+                  items: const [
+                    DropdownMenuItem(child: Text("Host")),
+                    DropdownMenuItem(child: Text("Rider")),
+                  ], 
+                  onChanged: (value) {},
+                  decoration: const InputDecoration(
+                    helperText: "puddl type"
+                  ),
+                )
+              ],
+            )
           )
         )
       )

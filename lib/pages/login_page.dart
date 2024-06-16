@@ -40,62 +40,65 @@ class _LoginPageState extends State<LoginPage>
     return Scaffold(
       body: SafeArea(
         child: Center(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 25.0),
-            child: Column(
-              children: [
-                // Login Icon
-                const Icon(Icons.login,
-                  size: 80),
+          child: SingleChildScrollView
+          (
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 25.0),
+              child: Column(
+                children: [
+                  // Login Icon
+                  const Icon(Icons.login,
+                    size: 80),
 
-                const SizedBox(height: 25),
+                  const SizedBox(height: 25),
 
-                // Header message  
-                const Text("Log in",
-                  style: TextStyle(fontSize: 16)),
+                  // Header message  
+                  const Text("Log in",
+                    style: TextStyle(fontSize: 16)),
 
-                const SizedBox(height: 25),
+                  const SizedBox(height: 25),
 
-                // Email field
-                TextField(
-                  controller: emailController, 
-                  decoration: const InputDecoration(hintText: 'Email'),
-                  obscureText: false
-                ),
+                  // Email field
+                  TextField(
+                    controller: emailController, 
+                    decoration: const InputDecoration(hintText: 'Email'),
+                    obscureText: false
+                  ),
 
-                const SizedBox(height: 10),
+                  const SizedBox(height: 10),
 
-                // Password field
-                TextFormField(
-                  controller: passwordController, 
-                  decoration: const InputDecoration(hintText: 'Password'),
-                  obscureText: true,
-                  onFieldSubmitted: (password) => signIn(),
-                ),
+                  // Password field
+                  TextFormField(
+                    controller: passwordController, 
+                    decoration: const InputDecoration(hintText: 'Password'),
+                    obscureText: true,
+                    onFieldSubmitted: (password) => signIn(),
+                  ),
 
-                const SizedBox(height: 25),
+                  const SizedBox(height: 25),
 
-                // Sign in button
-                FilledButton(
-                  onPressed: signIn,
-                  child: const Text('Sign In')
-                ),
-                
-                const SizedBox(height: 25),
+                  // Sign in button
+                  FilledButton(
+                    onPressed: signIn,
+                    child: const Text('Sign In')
+                  ),
+                  
+                  const SizedBox(height: 25),
 
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Text("Not a member?"),
-                    const SizedBox(width: 4),
-                    TextButton(
-                      onPressed: widget.onTap, 
-                      child: const Text("Create Account"))
-                  ],
-                )
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text("Not a member?"),
+                      const SizedBox(width: 4),
+                      TextButton(
+                        onPressed: widget.onTap, 
+                        child: const Text("Create Account"))
+                    ],
+                  )
 
-                // Register button
-              ],
+                  // Register button
+                ],
+              ),
             ),
           ),
         ),

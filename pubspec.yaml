@@ -42,6 +42,14 @@ dependencies:
   json_serializable: ^6.8.0
   build_runner: ^2.4.11
   json_annotation: ^4.9.0
+  flutter_speed_dial: ^7.0.0
+  google_maps_flutter: ^2.2.8
+  flutter_google_places_sdk: ^0.3.9
+  firebase_remote_config: ^5.0.1
+  location: ^6.0.2
+  calendar_date_picker2: ^1.0.6
+  intl: ^0.19.0
+  time_range_picker: ^2.3.0
 
 dev_dependencies:
   flutter_test:

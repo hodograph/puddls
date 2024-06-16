@@ -48,81 +48,84 @@ class _RegisterPageState extends State<RegisterPage>
     return Scaffold(
       body: SafeArea(
         child: Center(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 25.0),
-            child: Column(
-              children: [
-                // Login Icon
-                const Icon(Icons.login,
-                  size: 80),
+          child: SingleChildScrollView
+          (
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 25.0),
+              child: Column(
+                children: [
+                  // Login Icon
+                  const Icon(Icons.login,
+                    size: 80),
 
-                const SizedBox(height: 25),
+                  const SizedBox(height: 25),
 
-                // Header message  
-                const Text("Create Account",
-                  style: TextStyle(fontSize: 16)),
+                  // Header message  
+                  const Text("Create Account",
+                    style: TextStyle(fontSize: 16)),
 
-                const SizedBox(height: 25),
+                  const SizedBox(height: 25),
 
-                // Email field
-                TextField(
-                  controller: emailController, 
-                  decoration: const InputDecoration(hintText: 'Email'),
-                  obscureText: false
-                ),
+                  // Email field
+                  TextField(
+                    controller: emailController, 
+                    decoration: const InputDecoration(hintText: 'Email'),
+                    obscureText: false
+                  ),
 
-                const SizedBox(height: 10),
+                  const SizedBox(height: 10),
 
-                // Name field
-                TextField(
-                  controller: nameController, 
-                  decoration: const InputDecoration(hintText: 'Full Name'),
-                  obscureText: false
-                ),
+                  // Name field
+                  TextField(
+                    controller: nameController, 
+                    decoration: const InputDecoration(hintText: 'Full Name'),
+                    obscureText: false
+                  ),
 
-                const SizedBox(height: 10),
+                  const SizedBox(height: 10),
 
-                // Password field
-                TextField(
-                  controller: passwordController, 
-                  decoration: const InputDecoration(hintText: 'Password'),
-                  obscureText: true
-                ),
+                  // Password field
+                  TextField(
+                    controller: passwordController, 
+                    decoration: const InputDecoration(hintText: 'Password'),
+                    obscureText: true
+                  ),
 
-                const SizedBox(height: 10),
+                  const SizedBox(height: 10),
 
-                // Password confirmation field
-                TextFormField(
-                  controller: passwordConfirmationController, 
-                  decoration: const InputDecoration(hintText: 'Confirm Password'),
-                  obscureText: true,
-                  onFieldSubmitted: (password) => signUp(),
-                ),
+                  // Password confirmation field
+                  TextFormField(
+                    controller: passwordConfirmationController, 
+                    decoration: const InputDecoration(hintText: 'Confirm Password'),
+                    obscureText: true,
+                    onFieldSubmitted: (password) => signUp(),
+                  ),
 
-                const SizedBox(height: 25),
-                
-                // Sign up button
-                FilledButton(
-                  onPressed: signUp,
-                  child: const Text('Sign Up')
-                ),
-                
-                const SizedBox(height: 25),
+                  const SizedBox(height: 25),
+                  
+                  // Sign up button
+                  FilledButton(
+                    onPressed: signUp,
+                    child: const Text('Sign Up')
+                  ),
+                  
+                  const SizedBox(height: 25),
 
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Text("Already a member?"),
-                    const SizedBox(width: 4),
-                    TextButton(
-                      onPressed: widget.onTap, 
-                      child: const Text("Login now")
-                    )
-                  ],
-                )
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text("Already a member?"),
+                      const SizedBox(width: 4),
+                      TextButton(
+                        onPressed: widget.onTap, 
+                        child: const Text("Login now")
+                      )
+                    ],
+                  )
 
-                // Register button
-              ],
+                  // Register button
+                ],
+              ),
             ),
           ),
         ),
