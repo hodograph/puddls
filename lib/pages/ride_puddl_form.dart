@@ -30,6 +30,7 @@ class _RidePuddlForm extends State<RidePuddlForm>
 
   bool allDay = false;
 
+  String? timezone;
 
   void submitRide(LocationWrapper location)
   {
@@ -161,7 +162,7 @@ class _RidePuddlForm extends State<RidePuddlForm>
                     allDay: allDay,
                     onChange: (value) => setState(() => endRange = value),
                     defaultTime: endRange,
-                  ),
+                  )
                 ],
               )
             )

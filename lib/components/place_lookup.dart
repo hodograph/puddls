@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_google_places_sdk/flutter_google_places_sdk.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart' as maps;
 import 'package:location/location.dart';
@@ -25,6 +26,20 @@ class _PlaceLookup extends State<PlaceLookup>
   final Completer<maps.GoogleMapController> _controller = Completer();
   
   bool isOpen = false;
+
+  String? _darkMapStyle;
+
+  @override
+  void initState() 
+  {
+    super.initState();
+    _loadMapStyle();
+  }
+
+  Future _loadMapStyle() async
+  {
+    _darkMapStyle = await rootBundle.loadString("assets/json/dark_mode_style.json");
+  }
 
   Future<void> updateValueChanged(LocationData currentLocation) async
   {
@@ -143,7 +158,14 @@ class _PlaceLookup extends State<PlaceLookup>
                           maps.LatLng(position!.latLng!.lat, position!.latLng!.lng)
                       )
                     },
-                    onMapCreated: (mapController) => _controller.complete(mapController),
+                    onMapCreated: (mapController) 
+                    {
+                       _controller.complete(mapController);
+                       if(Theme.of(context).brightness == Brightness.dark)
+                       {
+                          mapController.setMapStyle(_darkMapStyle);
+                       }
+                    },
                   ),
               ),
           ),
