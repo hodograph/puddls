@@ -3,6 +3,7 @@ import 'package:flutter_google_places_sdk/flutter_google_places_sdk.dart';
 import 'package:provider/provider.dart';
 import 'package:puddls/components/date_time_selector.dart';
 import 'package:puddls/components/place_lookup.dart';
+import 'package:puddls/components/spin_edit.dart';
 import 'package:puddls/services/maps/location_wrapper.dart';
 import 'package:puddls/services/maps/places_wrapper.dart';
 
@@ -81,7 +82,6 @@ class _DrivePuddlForm extends State<DrivePuddlForm>
 
                   const SizedBox(height: 15),
                   const Divider(),
-                  const SizedBox(height: 15),
 
                   Row
                   (
@@ -110,6 +110,34 @@ class _DrivePuddlForm extends State<DrivePuddlForm>
                     onChange: (value) => setState(() => leaveTime = value),
                     defaultTime: leaveTime,
                   ),
+
+                  const Divider(),
+
+                  const Text("Luggage Space", style: TextStyle(fontSize: 18)),
+
+                  const SizedBox(height: 15),
+                  SpinEdit
+                  (
+                    onChange: (value) {}, 
+                    label: "Personal items",
+                    minValue: 0,
+                  ),
+
+                  const SizedBox(height: 15),
+                  SpinEdit
+                  (
+                    onChange: (value) {}, 
+                    label: "Carry-ons",
+                    minValue: 0,
+                  ),
+
+                  const SizedBox(height: 15),
+                  SpinEdit
+                  (
+                    onChange: (value) {}, 
+                    label: "Checked Bags",
+                    minValue: 0,
+                  )
                 ],
               )
             )

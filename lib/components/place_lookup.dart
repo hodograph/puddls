@@ -70,6 +70,7 @@ class _PlaceLookup extends State<PlaceLookup>
     return ExpansionPanelList
     (
       expansionCallback: (panelIndex, expanded) => setState((){ isOpen = expanded; }),
+      elevation: 0,
       children: [
         ExpansionPanel
         (

@@ -4,6 +4,7 @@ import 'package:flutter_google_places_sdk/flutter_google_places_sdk.dart';
 import 'package:provider/provider.dart';
 import 'package:puddls/components/date_time_selector.dart';
 import 'package:puddls/components/place_lookup.dart';
+import 'package:puddls/components/spin_edit.dart';
 import 'package:puddls/models/ride.dart';
 import 'package:puddls/services/maps/location_wrapper.dart';
 import 'package:puddls/services/maps/places_wrapper.dart';
@@ -128,7 +129,6 @@ class _RidePuddlForm extends State<RidePuddlForm>
 
                   const SizedBox(height: 15),
                   const Divider(),
-                  const SizedBox(height: 15),
 
                   Row
                   (
@@ -162,7 +162,36 @@ class _RidePuddlForm extends State<RidePuddlForm>
                     allDay: allDay,
                     onChange: (value) => setState(() => endRange = value),
                     defaultTime: endRange,
+                  ),
+
+                  const Divider(),
+
+                  const Text("Luggage", style: TextStyle(fontSize: 18)),
+
+                  const SizedBox(height: 15),
+                  SpinEdit
+                  (
+                    onChange: (value) {}, 
+                    label: "Personal item",
+                    minValue: 0,
+                  ),
+
+                  const SizedBox(height: 15),
+                  SpinEdit
+                  (
+                    onChange: (value) {}, 
+                    label: "Carry-on",
+                    minValue: 0,
+                  ),
+
+                  const SizedBox(height: 15),
+                  SpinEdit
+                  (
+                    onChange: (value) {}, 
+                    label: "Checked Bag",
+                    minValue: 0,
                   )
+                  
                 ],
               )
             )
