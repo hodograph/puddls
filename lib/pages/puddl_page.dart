@@ -45,12 +45,6 @@ class _PuddlePage extends State<PuddlPage>
             Center( child: Text("You are not currently watching any puddls"))
           ],
         ),
-        // floatingActionButton: FloatingActionButton(
-        //   onPressed: () => Navigator.of(context).push(
-        //     MaterialPageRoute(builder: (context) => const AddPuddlePage())
-        //   ),
-        //   child: const Icon(Icons.add)
-        // ),
         floatingActionButton: SpeedDial(
           icon: Icons.add,
           activeIcon: Icons.close,

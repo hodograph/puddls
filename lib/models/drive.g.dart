@@ -17,6 +17,13 @@ Drive _$DriveFromJson(Map<String, dynamic> json) => Drive(
       carryOns: (json['carryOns'] as num).toInt(),
       checkedBags: (json['checkedBags'] as num).toInt(),
       passengers: (json['passengers'] as num).toInt(),
+      rides:
+          (json['rides'] as List<dynamic>?)?.map((e) => e as String).toList() ??
+              const <String>[],
+      matches: (json['matches'] as List<dynamic>?)
+              ?.map((e) => e as String)
+              .toList() ??
+          const <String>[],
     );
 
 Map<String, dynamic> _$DriveToJson(Drive instance) => <String, dynamic>{
@@ -30,4 +37,6 @@ Map<String, dynamic> _$DriveToJson(Drive instance) => <String, dynamic>{
       'carryOns': instance.carryOns,
       'checkedBags': instance.checkedBags,
       'passengers': instance.passengers,
+      'rides': instance.rides,
+      'matches': instance.matches,
     };

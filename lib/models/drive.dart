@@ -15,6 +15,8 @@ class Drive
   final int carryOns;
   final int checkedBags;
   final int passengers;
+  final List<String> rides;
+  final List<String> matches;
 
   const Drive({required this.driver,
     required this.originLat,
@@ -25,7 +27,9 @@ class Drive
     required this.personalItems,
     required this.carryOns,
     required this.checkedBags,
-    required this.passengers});
+    required this.passengers,
+    this.rides = const <String>[],
+    this.matches = const <String> []});
 
   factory Drive.fromFirestore(DocumentSnapshot<Map<String, dynamic>> snapshot, SnapshotOptions? options) => Drive.fromJson(snapshot.data()!);
 

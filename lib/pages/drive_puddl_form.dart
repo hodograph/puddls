@@ -1,9 +1,12 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_google_places_sdk/flutter_google_places_sdk.dart';
 import 'package:provider/provider.dart';
 import 'package:puddls/components/date_time_selector.dart';
 import 'package:puddls/components/place_lookup.dart';
 import 'package:puddls/components/spin_edit.dart';
+import 'package:puddls/models/drive.dart';
+import 'package:puddls/pages/drive_puddl_route_form.dart';
 import 'package:puddls/services/maps/location_wrapper.dart';
 import 'package:puddls/services/maps/places_wrapper.dart';
 
@@ -28,7 +31,56 @@ class _DrivePuddlForm extends State<DrivePuddlForm>
 
   bool allDay = false;
 
-  String? timezone;
+  int personalItems = 0;
+  int carryOns = 0;
+  int checkedBags = 0;
+  int passengers = 1;
+
+  void gotoSelectRoute(LocationWrapper location)
+  {
+    if(destination != null)
+    {
+      if(destination != origin)
+      {
+        // Default origin lat/lng to current location.
+        double originLat = location.currentLocation!.latitude!;
+        double originLng = location.currentLocation!.longitude!;
+
+        // If origin is not null that means there is a different start location than the current user location.
+        if(origin != null)
+        {
+          originLat = origin!.latLng!.lat;
+          originLng = origin!.latLng!.lng;
+        }
+
+        Drive drive = Drive
+        (
+          destinationLat: destination!.latLng!.lat,
+          destinationLng: destination!.latLng!.lng,
+          originLat: originLat,
+          originLng: originLng,
+          driver: FirebaseAuth.instance.currentUser!.uid,
+          tripTime: leaveTime,
+          personalItems: personalItems,
+          carryOns: carryOns,
+          checkedBags: checkedBags,
+          passengers: passengers
+        );
+
+        Navigator.push(context, MaterialPageRoute(builder: (context) => DrivePuddlRouteForm(drive: drive)));
+      }
+      else 
+      {
+        // Alert destination and origin are the same place.
+        ScaffoldMessenger.of(context).showSnackBar( const SnackBar(content: Text("Warning: origin and destination location are the same place.")));
+      }
+    }
+    else
+    {
+      // Alert destination is current location.
+      ScaffoldMessenger.of(context).showSnackBar( const SnackBar(content: Text("Warning: destination is your current location.")));
+    }
+  }
   
   @override
   Widget build(BuildContext context) {
@@ -118,25 +170,28 @@ class _DrivePuddlForm extends State<DrivePuddlForm>
                   const SizedBox(height: 15),
                   SpinEdit
                   (
-                    onChange: (value) {}, 
+                    onChange: (value) => personalItems = value, 
                     label: "Personal items",
                     minValue: 0,
+                    initialValue: personalItems,
                   ),
 
                   const SizedBox(height: 15),
                   SpinEdit
                   (
-                    onChange: (value) {}, 
+                    onChange: (value) => carryOns = value, 
                     label: "Carry-ons",
                     minValue: 0,
+                    initialValue: carryOns,
                   ),
 
                   const SizedBox(height: 15),
                   SpinEdit
                   (
-                    onChange: (value) {}, 
+                    onChange: (value) => checkedBags = value, 
                     label: "Checked Bags",
                     minValue: 0,
+                    initialValue: checkedBags,
                   ),
 
                   const Divider(),
@@ -146,10 +201,10 @@ class _DrivePuddlForm extends State<DrivePuddlForm>
                   const SizedBox(height: 15),
                   SpinEdit
                   (
-                    onChange: (value) {}, 
+                    onChange: (value) => passengers = value, 
                     label: "Passengers",
                     minValue: 1,
-                    initialValue: 1,
+                    initialValue: passengers,
                   ),
 
                   const SizedBox(height: 15),
@@ -167,7 +222,7 @@ class _DrivePuddlForm extends State<DrivePuddlForm>
                             Icon(Icons.navigate_next_rounded)
                           ]
                         ),
-                        onPressed: () {},
+                        onPressed: () => gotoSelectRoute(context.read<LocationWrapper>()),
                       ),
                     ]
                   )
