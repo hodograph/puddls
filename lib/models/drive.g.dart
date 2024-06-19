@@ -1,33 +1,31 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'ride.dart';
+part of 'drive.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-Ride _$RideFromJson(Map<String, dynamic> json) => Ride(
-      rider: json['rider'] as String,
+Drive _$DriveFromJson(Map<String, dynamic> json) => Drive(
+      driver: json['driver'] as String,
       originLat: (json['originLat'] as num).toDouble(),
       originLng: (json['originLng'] as num).toDouble(),
       destinationLat: (json['destinationLat'] as num).toDouble(),
       destinationLng: (json['destinationLng'] as num).toDouble(),
-      startPickupRange: DateTime.parse(json['startPickupRange'] as String),
-      endPickupRange: DateTime.parse(json['endPickupRange'] as String),
+      tripTime: DateTime.parse(json['tripTime'] as String),
       personalItems: (json['personalItems'] as num).toInt(),
       carryOns: (json['carryOns'] as num).toInt(),
       checkedBags: (json['checkedBags'] as num).toInt(),
       passengers: (json['passengers'] as num).toInt(),
     );
 
-Map<String, dynamic> _$RideToJson(Ride instance) => <String, dynamic>{
-      'rider': instance.rider,
+Map<String, dynamic> _$DriveToJson(Drive instance) => <String, dynamic>{
+      'driver': instance.driver,
       'originLat': instance.originLat,
       'originLng': instance.originLng,
       'destinationLat': instance.destinationLat,
       'destinationLng': instance.destinationLng,
-      'startPickupRange': instance.startPickupRange.toIso8601String(),
-      'endPickupRange': instance.endPickupRange.toIso8601String(),
+      'tripTime': instance.tripTime.toIso8601String(),
       'personalItems': instance.personalItems,
       'carryOns': instance.carryOns,
       'checkedBags': instance.checkedBags,

@@ -1,37 +1,35 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:json_annotation/json_annotation.dart';
-part 'ride.g.dart';
+part 'drive.g.dart';
 
 @JsonSerializable()
-class Ride
+class Drive
 {
-  final String rider;
+  final String driver;
   final double originLat;
   final double originLng;
   final double destinationLat;
   final double destinationLng;
-  final DateTime startPickupRange;
-  final DateTime endPickupRange;
+  final DateTime tripTime;
   final int personalItems;
   final int carryOns;
   final int checkedBags;
   final int passengers;
 
-  const Ride({required this.rider,
+  const Drive({required this.driver,
     required this.originLat,
     required this.originLng,
     required this.destinationLat,
     required this.destinationLng,
-    required this.startPickupRange,
-    required this.endPickupRange,
+    required this.tripTime,
     required this.personalItems,
     required this.carryOns,
     required this.checkedBags,
     required this.passengers});
 
-  factory Ride.fromFirestore(DocumentSnapshot<Map<String, dynamic>> snapshot, SnapshotOptions? options) => Ride.fromJson(snapshot.data()!);
+  factory Drive.fromFirestore(DocumentSnapshot<Map<String, dynamic>> snapshot, SnapshotOptions? options) => Drive.fromJson(snapshot.data()!);
 
-  factory Ride.fromJson(Map<String, dynamic> json) => _$RideFromJson(json);
+  factory Drive.fromJson(Map<String, dynamic> json) => _$DriveFromJson(json);
 
-  Map<String, dynamic> toJson() => _$RideToJson(this);
+  Map<String, dynamic> toJson() => _$DriveToJson(this);
 }

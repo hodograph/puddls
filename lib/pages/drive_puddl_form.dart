@@ -137,16 +137,44 @@ class _DrivePuddlForm extends State<DrivePuddlForm>
                     onChange: (value) {}, 
                     label: "Checked Bags",
                     minValue: 0,
+                  ),
+
+                  const Divider(),
+
+                  const Text("Passengers", style: TextStyle(fontSize: 18)),
+
+                  const SizedBox(height: 15),
+                  SpinEdit
+                  (
+                    onChange: (value) {}, 
+                    label: "Passengers",
+                    minValue: 1,
+                    initialValue: 1,
+                  ),
+
+                  const SizedBox(height: 15),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: 
+                    [
+                      FilledButton
+                      (
+                        child: const Row
+                        (
+                          children: 
+                          [ 
+                            Text("Pick Route"),
+                            Icon(Icons.navigate_next_rounded)
+                          ]
+                        ),
+                        onPressed: () {},
+                      ),
+                    ]
                   )
                 ],
               )
             )
-          ),
-          floatingActionButton: FilledButton
-          (
-            child: const Icon(Icons.navigate_next_rounded, size: 50,),
-            onPressed: () => {},
-          ),
+          )
         )
       )
     );

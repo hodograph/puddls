@@ -29,6 +29,11 @@ class _RidePuddlForm extends State<RidePuddlForm>
   DateTime minSelectableRange = DateTime.now();
   DateTime maxSelectableRange = DateTime.now().add( const Duration(days: 365));
 
+  int personalItems = 0;
+  int carryOns = 0;
+  int checkedBags = 0;
+  int passengers = 1;
+
   bool allDay = false;
 
   String? timezone;
@@ -60,7 +65,11 @@ class _RidePuddlForm extends State<RidePuddlForm>
             originLng: originLng,
             rider: FirebaseAuth.instance.currentUser!.uid,
             startPickupRange: beginRange,
-            endPickupRange: allDay ? endRange.add(const Duration(hours: 24)) : endRange
+            endPickupRange: allDay ? endRange.add(const Duration(hours: 24)) : endRange,
+            personalItems: personalItems,
+            carryOns: carryOns,
+            checkedBags: checkedBags,
+            passengers: passengers
           );
 
           // TODO: submit ride.
@@ -115,8 +124,6 @@ class _RidePuddlForm extends State<RidePuddlForm>
                   ),
 
                   const SizedBox(height: 15),
-                  const Divider(),
-                  const SizedBox(height: 15),
 
                   // Destination
                   PlaceLookup(
@@ -127,7 +134,7 @@ class _RidePuddlForm extends State<RidePuddlForm>
                     label: "Dropoff",
                   ),
 
-                  const SizedBox(height: 15),
+                  const SizedBox(height: 10),
                   const Divider(),
 
                   Row
@@ -171,35 +178,60 @@ class _RidePuddlForm extends State<RidePuddlForm>
                   const SizedBox(height: 15),
                   SpinEdit
                   (
-                    onChange: (value) {}, 
+                    onChange: (value) => personalItems = value,
                     label: "Personal item",
                     minValue: 0,
+                    initialValue: personalItems,
                   ),
 
                   const SizedBox(height: 15),
                   SpinEdit
                   (
-                    onChange: (value) {}, 
+                    onChange: (value) => carryOns = value, 
                     label: "Carry-on",
                     minValue: 0,
+                    initialValue: carryOns,
                   ),
 
                   const SizedBox(height: 15),
                   SpinEdit
                   (
-                    onChange: (value) {}, 
+                    onChange: (value) => checkedBags = value, 
                     label: "Checked Bag",
                     minValue: 0,
+                    initialValue: checkedBags,
+                  ),
+
+                  const SizedBox(height: 10),
+                  const Divider(),
+
+                  const Text("Passengers", style: TextStyle(fontSize: 18)),
+
+                  const SizedBox(height: 15),
+                  SpinEdit
+                  (
+                    onChange: (value) => passengers = value, 
+                    label: "Passengers",
+                    minValue: 1,
+                    initialValue: passengers,
+                  ),
+
+                  const SizedBox(height: 15),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: 
+                    [
+                      FilledButton
+                      (
+                        child: const Text("Submit"),
+                        onPressed: () => submitRide(context.read<LocationWrapper>()),
+                      ),
+                    ]
                   )
                   
                 ],
               )
             )
-          ),
-          floatingActionButton: FilledButton
-          (
-            child: const Icon(Icons.upload_rounded, size: 50,),
-            onPressed: () => submitRide(context.read<LocationWrapper>()),
           ),
         )
       )
